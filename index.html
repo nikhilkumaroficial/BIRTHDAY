@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday 🎉</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
-    }
+<meta charset="UTF-8">
+<title>Happy Birthday 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+  }
 
-    video {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover; /* fills screen */
+  #birthdayVideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vh;       /* use height as width to fill landscape */
+    height: 100vw;      /* use width as height */
+    transform: rotate(90deg) translate(-50%, -50%);
+    transform-origin: center center;
+    object-fit: cover;
+  }
+
+  /* If user rotates device to landscape, reset rotation */
+  @media (orientation: landscape) {
+    #birthdayVideo {
+      width: 100%;
+      height: 100%;
+      transform: none;
     }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <!-- Birthday Video -->
   <video id="birthdayVideo" autoplay muted playsinline controls>
     <source src="your-video.mp4" type="video/mp4">
   </video>
-
-  <!-- Optional: Background Music -->
-  <audio id="music" autoplay loop>
-    <source src="your-music.mp3" type="audio/mp3">
-  </audio>
-
-  <script>
-    // Unmute video and music after page loads (if allowed by browser)
-    const vid = document.getElementById("birthdayVideo");
-    const music = document.getElementById("music");
-
-    window.addEventListener("load", () => {
-      vid.muted = false;
-      vid.play().catch(() => {});  // ignore autoplay block
-      music.play().catch(() => {});
-    });
-  </script>
 </body>
 </html>
