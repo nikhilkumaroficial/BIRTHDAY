@@ -9,117 +9,37 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-
-    /* Welcome Screen */
-    #welcome {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, #ff4081, #ffcc00, #00e676, #2979ff);
-      background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 10;
-    }
-
-    #welcome h1 {
-      font-size: 2.5rem;
-      animation: pop 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    @keyframes pop {
-      from {transform: scale(1);}
-      to {transform: scale(1.1);}
-    }
-
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: red;
-      top: -10px;
-      animation: fall 4s linear infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(720deg);
-      }
-    }
-
-    /* Video Section */
-    #videoSection {
-      display: none;
-      width: 100%;
-      height: 100vh;
       background: black;
     }
 
     video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* Show full video, no cropping */
-      background: black;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* fills screen */
     }
   </style>
 </head>
 <body>
-  <!-- Birthday Music -->
+  <!-- Birthday Video -->
+  <video id="birthdayVideo" autoplay muted playsinline controls>
+    <source src="your-video.mp4" type="video/mp4">
+  </video>
+
+  <!-- Optional: Background Music -->
   <audio id="music" autoplay loop>
     <source src="your-music.mp3" type="audio/mp3">
   </audio>
 
-  <!-- Welcome Animation -->
-  <div id="welcome">
-    <h1>🎂 Happy Birthday 🎉</h1>
-  </div>
-
-  <!-- Video Section -->
-  <div id="videoSection">
-    <video id="birthdayVideo" autoplay muted playsinline controls>
-      <source src="your-video.mp4" type="video/mp4">
-    </video>
-  </div>
-
   <script>
-    // 🎉 Generate Confetti
-    function createConfetti() {
-      for (let i = 0; i < 50; i++) {
-        let confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor = 
-          "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-        confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
-        document.getElementById("welcome").appendChild(confetti);
-      }
-    }
-    createConfetti();
+    // Unmute video and music after page loads (if allowed by browser)
+    const vid = document.getElementById("birthdayVideo");
+    const music = document.getElementById("music");
 
-    // 🎥 After 7s show video
-    setTimeout(() => {
-      document.getElementById("welcome").style.display = "none";
-      document.getElementById("videoSection").style.display = "block";
-      document.getElementById("music").pause();
-
-      let vid = document.getElementById("birthdayVideo");
-      vid.muted = false; // unmute after welcome screen
-      vid.play();
-    }, 7000);
+    window.addEventListener("load", () => {
+      vid.muted = false;
+      vid.play().catch(() => {});  // ignore autoplay block
+      music.play().catch(() => {});
+    });
   </script>
 </body>
 </html>
