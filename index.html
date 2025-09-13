@@ -31,7 +31,7 @@
     }
 
     #welcome h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       animation: pop 1s ease-in-out infinite alternate;
     }
 
@@ -72,13 +72,14 @@
     video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain; /* Show full video, no cropping */
+      background: black;
     }
   </style>
 </head>
 <body>
   <!-- Birthday Music -->
-  <audio id="music" autoplay>
+  <audio id="music" autoplay loop>
     <source src="your-music.mp3" type="audio/mp3">
   </audio>
 
@@ -89,7 +90,7 @@
 
   <!-- Video Section -->
   <div id="videoSection">
-    <video id="birthdayVideo" autoplay controls>
+    <video id="birthdayVideo" autoplay muted playsinline controls>
       <source src="your-video.mp4" type="video/mp4">
     </video>
   </div>
@@ -114,7 +115,10 @@
       document.getElementById("welcome").style.display = "none";
       document.getElementById("videoSection").style.display = "block";
       document.getElementById("music").pause();
-      document.getElementById("birthdayVideo").play();
+
+      let vid = document.getElementById("birthdayVideo");
+      vid.muted = false; // unmute after welcome screen
+      vid.play();
     }, 7000);
   </script>
 </body>
